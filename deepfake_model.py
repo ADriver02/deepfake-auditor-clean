@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from transformers import AutoImageProcessor, ViTForImageClassification
 import cv2
 import torch
@@ -10,25 +9,13 @@ model_name = "prithivMLmods/Deep-Fake-Detector-v2-Model"
 processor = AutoImageProcessor.from_pretrained(model_name)
 model = ViTForImageClassification.from_pretrained(model_name)
 
-# Détecteur de visage (Haar Cascade)
+# Détecteur de visage
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-=======
-from transformers import pipeline
-import cv2
-
-# MODÈLE PUBLIC QUI MARCHE À 100%
-detector = pipeline(
-    "image-classification",
-    model="umm-maybe/deepfake-detection-v2",  # Version publique
-    device=-1  # CPU only
-)
->>>>>>> 83d2796264fd41c4247e5cac875f7d5ce6221eb2
 
 def extract_score(video_path):
     cap = cv2.VideoCapture(video_path)
     scores = []
     frame_count = 0
-<<<<<<< HEAD
 
     while cap.isOpened() and frame_count < 60:
         ret, frame = cap.read()
@@ -36,7 +23,7 @@ def extract_score(video_path):
             break
         frame_count += 1
 
-        # Focus sur le visage
+        # Détection visage
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
         
@@ -46,6 +33,7 @@ def extract_score(video_path):
         else:
             face = frame  # fallback
 
+        # Préparation image
         rgb_face = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
         pil_image = Image.fromarray(rgb_face).resize((224, 224))
         
@@ -63,23 +51,10 @@ def extract_score(video_path):
 
     raw_score = np.mean(scores)
 
-    # BOOST INTELLIGENT
+    # BOOST AGRESSIF
     if raw_score > 0.5:
         raw_score = min(0.99, raw_score * 1.5)
     elif raw_score > 0.3:
         raw_score = min(0.95, raw_score * 1.3)
 
     return raw_score
-=======
-    while cap.isOpened() and frame_count < 30:
-        ret, frame = cap.read()
-        if not ret: break
-        frame_count += 1
-        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        result = detector(rgb_frame)
-        # Cherche "FAKE" ou "REAL"
-        fake_score = next((r['score'] for r in result if r['label'].lower() == 'fake'), 0.0)
-        scores.append(fake_score)
-    cap.release()
-    return sum(scores) / len(scores) if scores else 0.5
->>>>>>> 83d2796264fd41c4247e5cac875f7d5ce6221eb2
