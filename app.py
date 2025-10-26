@@ -2,7 +2,6 @@ import streamlit as st
 from deepfake_model import extract_score
 from grok_api import ask_grok
 import os
-<<<<<<< HEAD
 import tempfile
 
 # === CONFIG PAGE ===
@@ -44,30 +43,10 @@ if uploaded_file is not None:
         score = extract_score(video_path)
 
     # === AFFICHAGE SCORE ===
-=======
-
-st.set_page_config(page_title="Deepfake Auditor", layout="centered")
-st.title("Deepfake Auditor")
-st.caption("Détecte les faux candidats en <5s")
-
-uploaded_file = st.file_uploader("Upload vidéo (max 2 min)", type=["mp4", "mov"])
-
-if uploaded_file:
-    video_path = "temp_video.mp4"
-    with open(video_path, "wb") as f:
-        f.write(uploaded_file.read())
-
-    with st.spinner("Analyse IA..."):
-        score = extract_score(video_path)
-        prompt = f"Score deepfake : {score:.2f}. Vrai ou faux candidat ? Réponds en 1 phrase."
-        verdict = ask_grok(prompt)
-
->>>>>>> 83d2796264fd41c4247e5cac875f7d5ce6221eb2
     col1, col2 = st.columns(2)
     with col1:
         st.metric("Score IA", f"{score:.2f}")
     with col2:
-<<<<<<< HEAD
         confiance = (1 - score) * 100
         if confiance >= 75:
             st.metric("Confiance Grok", f"{confiance:.0f}%", delta="SÛR", delta_color="normal")
@@ -104,34 +83,19 @@ else:
     st.info("Upload une vidéo pour commencer.")
     st.image("https://via.placeholder.com/800x400.png?text=Deepfake+Auditor+-+Upload+ta+vidéo", use_column_width=True)
 
-
 # === FOOTER ===
 st.markdown("---")
 st.markdown("""
 ### Pourquoi Deepfake Auditor ?
 - **1er outil RH anti-deepfake à 99€/mois**  
-- **Grok-3 intégré** → verdict clair, rapide  
+- **Grok-3 intégré** → verdict clair, pas de bullshit  
 - **77% sur deepfake flagrant** → testé sur Macron en poussette  
 - **1 fraude = 50 000€ de perte** (FBI 2025)  
 - **99€/mois = ROI x500** → 1 alerte = 50k€ sauvés  
 
 > **"Pas un outil. Un bouclier RH."**
 
-**Beta gratuite 1 mois** → 50 places → DM @ADriver0205  
+**Beta gratuite 1 mois** → 50 places → DM @ADriver02  
 **B2B : 99€/mois** (illimité · API · Zoom)
 """)
 st.caption("Deepfake Auditor © 2025 | Bêta RH | 99€/mois après essai gratuit")
-=======
-        st.metric("Confiance Grok", f"{int((1-score)*100)}%")
-
-    st.write(f"**Verdict Grok** : {verdict}")
-
-    if score > 0.6:
-        st.error("DEEPFAKE DÉTECTÉ")
-    elif score > 0.4:
-        st.warning("Suspicion – Vérification manuelle")
-    else:
-        st.success("Semble authentique")
-
-    os.remove(video_path)
->>>>>>> 83d2796264fd41c4247e5cac875f7d5ce6221eb2
