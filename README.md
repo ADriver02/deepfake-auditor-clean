@@ -21,7 +21,7 @@ https://deepfakeauditor.streamlit.app
 > **"Pas un outil. Un bouclier RH."**
 
 ## Beta RH Gratuite
-50 places → DM @ADriver02
+50 places → DM @ADriver0220
 
 ## B2B : 99€/mois
 Illimité · API · Support · Intégration Zoom
@@ -31,4 +31,4 @@ Illimité · API · Support · Intégration Zoom
 **© 2025 | Built with Grok-3**
 =======
 **© 2025 | Built with Grok-3**
->>>>>>> 83d2796264fd41c4247e5cac875f7d5ce6221eb2
+
