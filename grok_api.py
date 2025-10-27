@@ -2,7 +2,6 @@ import os
 import requests
 from dotenv import load_dotenv
 
-# Charge la clé depuis .env
 load_dotenv()
 API_KEY = os.getenv("GROK_API_KEY")
 
@@ -22,7 +21,9 @@ def ask_grok(prompt):
     }
     
     try:
-        response = requests.post(url, headers=headers, json=data)
+        response = requests.post(url, headers=headers, json=data, timeout=10)
+        if response.status_code == 403:
+            return "Erreur 403 : Limite xAI atteinte"
         response.raise_for_status()
         return response.json()["choices"][0]["message"]["content"].strip()
     except Exception as e:
